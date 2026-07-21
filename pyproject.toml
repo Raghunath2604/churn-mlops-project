@@ -1,0 +1,35 @@
+[project]
+name = "churn-model"
+version = "1.0.0"
+description = "End-to-end MLOps reference project: churn prediction + retention agent"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas<3",
+    "scikit-learn>=1.4",
+    "pyyaml",
+    "dvc",
+    "mlflow>=3.10",
+    "setuptools<75",
+    "fastapi",
+    "uvicorn",
+    "prometheus-client",
+    "bentoml",
+    "kfp",
+    "feast",
+    "chromadb",
+    "langgraph",
+    "anthropic",
+    "requests",
+    "evidently",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
