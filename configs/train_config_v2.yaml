@@ -1,0 +1,6 @@
+data_path: data/customer_churn.csv
+model_output_path: model.pkl
+test_size: 0.2
+random_state: 42
+n_estimators: 300
+max_depth: 8
