@@ -1,0 +1,19 @@
+# Convenience file: brings up the serving container plus Prometheus together
+# for local testing. Run: docker compose up
+services:
+  churn-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.serve
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./model.pkl:/app/model/model.pkl:ro
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - churn-service

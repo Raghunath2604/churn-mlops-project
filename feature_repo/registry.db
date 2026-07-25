@@ -1,0 +1,35 @@
+
+E
+%
+__dummy"
+__dummy_idJchurn_features
+Ë‡ıÒğ©ş–Ë‡ıÒğ©ş–
+a
+A
+customer_idA customer identifier"customer_idJchurn_features
+Ë‡ıÒˆ‰—Ë‡ıÒˆ‰—1"$187692d6-1e74-430f-9e44-a137d118bd15*Ğ‡ıÒˆ¸Ëp2Œ
+Ó
+churn_featureschurn_featurescustomer_id"
+tenure_months"
+monthly_charges"
+total_charges"
+num_support_tickets2€ç„:¬event_timestamp*createdZdata/churn_features.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢data/churn_features.parquet’Ë‡ıÒà†ó‡"Ë‡ıÒóğ–@b
+customer_id’latest4
+Ë‡ıÒĞÔ—Ğ‡ıÒ¸í´p
+Ğ øÃ ÇøË‡ıÒ0R
+‹
+,feast.infra.online_stores.sqlite.SqliteTable"[
+:/home/claude/churn-model-demo/feature_repo/online_store.dbchurn_features_churn_featuresb½event_timestamp*createdZdata/churn_features.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢data/churn_features.parquetªchurn_features’Ë‡ıÒà†ó‡"Ë‡ıÒóğ–Š0
+
+churn_features
+Ë‡ıÒè‹¨ˆË‡ıÒè‹¨ˆ’Ü
+Ù
+churn_featureschurn_features"feature_view*ô
+Ó
+churn_featureschurn_featurescustomer_id"
+tenure_months"
+monthly_charges"
+total_charges"
+num_support_tickets2€ç„:¬event_timestamp*createdZdata/churn_features.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢data/churn_features.parquet’Ë‡ıÒà†ó‡"Ë‡ıÒóğ–@b
+customer_id’latest
+Ë‡ıÒĞÔ—Ë‡ıÒĞÔ—2Ë‡ıÒØ§«—B$c45d4a4f-3f4a-4634-b28a-f0f8c1d15cbf

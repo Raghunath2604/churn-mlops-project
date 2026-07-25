@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+FROM python:3.12-slim AS builder
+COPY --from=ghcr.io/astral-sh/uv:0.11 /uv /uvx /bin/
+WORKDIR /app
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+COPY pyproject.toml uv.lock ./
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked --no-install-project --no-dev
+COPY src/ src/
+COPY configs/ configs/
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked --no-dev
+
+FROM python:3.12-slim AS runtime
+RUN groupadd -g 1001 appgroup && useradd -u 1001 -g appgroup -m appuser
+WORKDIR /app
+ENV PATH="/app/.venv/bin:$PATH" PYTHONPATH="/app/src"
+COPY --from=builder --chown=appuser:appgroup /app /app
+USER appuser
+ENTRYPOINT ["python", "-m", "churn_model.cli"]
+CMD ["--config", "configs/train_config.yaml"]

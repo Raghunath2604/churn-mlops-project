@@ -1,0 +1,6 @@
+The model is served two ways: as a BentoML service for fast local iteration, and as
+a KServe InferenceService on Kubernetes for production, with minReplicas set to 0 to
+enable scale-to-zero. Features are managed through Feast, with an offline store for
+training and an online SQLite store for real-time serving, achieving lookup latency
+of under 5 milliseconds per request. Discount offers from the retention agent are
+capped at 25 percent maximum, enforced in code regardless of what is requested.

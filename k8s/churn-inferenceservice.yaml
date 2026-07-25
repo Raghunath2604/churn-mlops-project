@@ -1,0 +1,18 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: churn-model
+  namespace: mlops-demo
+spec:
+  predictor:
+    minReplicas: 0
+    maxReplicas: 3
+    containers:
+      - name: kserve-container
+        image: churn-model-service:latest
+        ports: [{containerPort: 8000, protocol: TCP}]
+        env:
+          - {name: MODEL_PATH, value: /mnt/models/model.pkl}
+        resources:
+          requests: {cpu: "100m", memory: "256Mi"}
+          limits: {cpu: "500m", memory: "512Mi"}

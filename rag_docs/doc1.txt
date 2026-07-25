@@ -1,0 +1,5 @@
+The churn-classifier model was trained using a RandomForestClassifier on customer
+data including tenure_months, monthly_charges, total_charges, and num_support_tickets.
+The current champion model is version 1, registered in the MLflow Model Registry
+under the alias "champion". The model achieves 89.7% accuracy on the held-out
+test set, beating the trivial majority-class baseline of 82.1%.

@@ -1,0 +1,5 @@
+Data drift monitoring for this project uses Evidently AI. The reference dataset is
+the original training data. A drift check compares production traffic against this
+reference using the Kolmogorov-Smirnov test for numerical columns. If more than 30%
+of columns show statistically significant drift (p-value below 0.05), an alert fires
+to a webhook.

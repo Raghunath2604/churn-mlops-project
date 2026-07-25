@@ -1,0 +1,11 @@
+.venv/
+.git/
+.dvc/cache/
+.pytest_cache/
+__pycache__/
+*.pyc
+data/*.csv
+mlruns/
+mlflow.db
+model.pkl
+chroma_db/
