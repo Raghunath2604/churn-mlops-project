@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  churn-service:
+    volumes:
+      - ./model.pkl:/app/model/model.pkl:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  streamlit-ui:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/healthz" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
