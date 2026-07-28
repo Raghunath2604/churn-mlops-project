@@ -3,6 +3,8 @@ logic -- not a mock. The LLM can only *request* actions; enforcement of
 business rules happens here, in code, where it can't be prompted around."""
 import pickle, logging, re
 
+import pandas as pd
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -21,7 +23,7 @@ def check_churn_risk(customer_id: str) -> dict:
     account = MOCK_ACCOUNTS.get(customer_id)
     if account is None:
         return {"error": f"unknown customer {customer_id}"}
-    X = [[account["tenure_months"], account["monthly_charges"], account["total_charges"], account["num_support_tickets"]]]
+    X = pd.DataFrame([account])
     proba = float(CHURN_MODEL.predict_proba(X)[0][1])
     tier = "high_risk" if proba > 0.5 else "medium_risk" if proba > 0.25 else "low_risk"
     logger.info(f"check_churn_risk({customer_id}) -> proba={proba:.3f}, tier={tier}")

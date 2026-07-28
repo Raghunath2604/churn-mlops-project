@@ -1,4 +1,6 @@
 import os, time, pickle, logging
+
+import pandas as pd
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
@@ -31,7 +33,12 @@ def metrics():
 @app.post("/predict")
 def predict(req: ChurnRequest):
     start = time.perf_counter()
-    X = [[req.tenure_months, req.monthly_charges, req.total_charges, req.num_support_tickets]]
+    X = pd.DataFrame([{
+        "tenure_months": req.tenure_months,
+        "monthly_charges": req.monthly_charges,
+        "total_charges": req.total_charges,
+        "num_support_tickets": req.num_support_tickets,
+    }])
     pred = int(model.predict(X)[0])
     proba = float(model.predict_proba(X)[0][1])
     PREDICTION_LATENCY.observe(time.perf_counter() - start)
