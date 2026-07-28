@@ -60,12 +60,30 @@ permanent regression tests in `test_agent_eval.py`.
 
 ## Architecture
 
+**High-level architecture**
+
+```mermaid
+flowchart LR
+    A[Customer / UI] -->|message| B(Agent: Guardrail)
+    B --> C{Churn Risk Check}
+    C --> D[Model Store / MLflow + DVC]
+    C --> E{Routing}
+    E -->|fast| F[Light LLM / Fast path]
+    E -->|strong| G[Heavy LLM / Human-in-the-loop]
+    F --> H[Offer Decision]
+    G --> I[Escalate to Specialist]
+    H --> J[Telemetry: Prometheus]
+    I --> J
+    subgraph infra [Infrastructure]
+        D
+        J[Prometheus + MLflow]
+    end
 ```
-Customer message → guardrail check → churn risk check → cost-aware routing
-                                                              ↓
-                                            offer (capped) OR escalate to human
-```
-Every step is traced (MLflow), every routing decision and cost is logged
-(Prometheus), and the churn model backing the first check is the exact
-same versioned, registry-tracked model as the standalone system above —
-one operational pipeline, not two disconnected projects.
+
+Notes:
+- **Agent** (`retention_agent.py`) runs a deterministic graph: guardrail → risk check → routing → action.
+- **Model Store**: models are versioned (DVC) and tracked in MLflow; serving uses the same artifact.
+- **Serving**: FastAPI (`src/churn_model/serve.py`) and BentoML (`bento_service.py`) expose the same model.
+- **Observability**: routing decisions and costs are exposed to Prometheus; traces are exported to MLflow.
+- **Resilience**: the agent falls back to deterministic logic when the LLM key is absent and to an in-repo fallback model when `model.pkl` is not available locally (useful for CI).
+
