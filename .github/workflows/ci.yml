@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -20,27 +23,25 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        working-directory: ./churn-model-demo
+          pip install -r requirements.txt pytest
 
       - name: Run tests
         run: |
           python -m pytest -q
-        working-directory: ./churn-model-demo
 
       - name: Build Docker images (no push)
         uses: docker/build-push-action@v5
         with:
-          context: ./churn-model-demo
-          file: ./churn-model-demo/Dockerfile.serve
+          context: .
+          file: ./Dockerfile.serve
           tags: churn-service:ci
           push: false
 
       - name: Build Streamlit UI image (no push)
         uses: docker/build-push-action@v5
         with:
-          context: ./churn-model-demo
-          file: ./churn-model-demo/Dockerfile.ui
+          context: .
+          file: ./Dockerfile.ui
           tags: streamlit-ui:ci
           push: false
 
@@ -60,15 +61,15 @@ jobs:
       - name: Build and push churn-service
         uses: docker/build-push-action@v5
         with:
-          context: ./churn-model-demo
-          file: ./churn-model-demo/Dockerfile.serve
+          context: .
+          file: ./Dockerfile.serve
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/churn-service:latest
 
       - name: Build and push streamlit-ui
         uses: docker/build-push-action@v5
         with:
-          context: ./churn-model-demo
-          file: ./churn-model-demo/Dockerfile.ui
+          context: .
+          file: ./Dockerfile.ui
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/streamlit-ui:latest
