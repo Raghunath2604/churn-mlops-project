@@ -80,6 +80,11 @@ flowchart LR
     end
 ```
 
+If your viewer doesn't render Mermaid, a static SVG version of the architecture
+diagram is included here:
+
+![Architecture diagram](docs/architecture.svg)
+
 Notes:
 - **Agent** (`retention_agent.py`) runs a deterministic graph: guardrail → risk check → routing → action.
 - **Model Store**: models are versioned (DVC) and tracked in MLflow; serving uses the same artifact.
