@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.venv/*
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dylib
+*.egg-info/
+
+# Data and ML artifacts
+mlruns/
+mlflow.db
+model.pkl
+chroma_db/
+chroma_db
+mlflow/
+
+# DVC
+.dvc/
+*.dvc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Lock files
+uv.lock
+
+# Kubernetes
+.kube
+
+# Logs
+*.log
+logs/
