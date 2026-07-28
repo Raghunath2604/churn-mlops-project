@@ -20,6 +20,7 @@ dependencies = [
     "langgraph",
     "anthropic",
     "requests",
+    "streamlit",
     "evidently",
 ]
 
