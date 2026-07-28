@@ -1,13 +1,12 @@
-import pickle
-
 import pandas as pd
 import bentoml
+
+from model_loader import load_churn_model
 
 @bentoml.service(resources={"cpu": "1"}, traffic={"timeout": 20})
 class ChurnService:
     def __init__(self):
-        with open("model.pkl", "rb") as f:
-            self.model = pickle.load(f)
+        self.model = load_churn_model()
 
     @bentoml.api
     def predict(self, tenure_months: float, monthly_charges: float, total_charges: float, num_support_tickets: int) -> dict:

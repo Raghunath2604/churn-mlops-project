@@ -1,16 +1,17 @@
-import os, time, pickle, logging
+import os, time, logging
 
 import pandas as pd
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
+from model_loader import load_churn_model
+
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
 logger = logging.getLogger(__name__)
 app = FastAPI(title="churn-model-service")
 MODEL_PATH = os.environ.get("MODEL_PATH", "/app/model/model.pkl")
-with open(MODEL_PATH, "rb") as f:
-    model = pickle.load(f)
+model = load_churn_model(MODEL_PATH)
 logger.info(f"Loaded model from {MODEL_PATH}")
 
 PREDICTION_COUNT = Counter("churn_predictions_total", "Total predictions served", ["predicted_class"])

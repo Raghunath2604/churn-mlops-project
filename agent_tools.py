@@ -1,15 +1,16 @@
 """Tool layer for the Retention Agent. Every function here is real, callable
 logic -- not a mock. The LLM can only *request* actions; enforcement of
 business rules happens here, in code, where it can't be prompted around."""
-import pickle, logging, re
+import logging, re
 
 import pandas as pd
+
+from model_loader import load_churn_model
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
-with open("model.pkl", "rb") as f:
-    CHURN_MODEL = pickle.load(f)
+CHURN_MODEL = load_churn_model()
 
 MAX_DISCOUNT_PCT = {"low_risk": 5, "medium_risk": 15, "high_risk": 25}
 ABSOLUTE_MAX_DISCOUNT_PCT = 25
